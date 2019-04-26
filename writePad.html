@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .write-content{
+      width:500px;
+      height:500px;
+      border: 1px solid #E9EDF0;
+    }
+    #canvas{
+      width:100%;
+      height:100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="test">
+    <section class="write-content">
+      <div id="canvas">
+      </div>
+    </section>
+    <section>
+      <div class="btn-write-content">
+        <button id="clearCanvas">清除</button>
+        <button id="saveCanvas">保存</button>
+        <button id="saveCanvas" onclick="saveDomToPng()">保存DOM</button>
+      </div>
+    </section>
+  </div>
+</body>
+<script src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<script>
+  var type = 'png';
+  //保存图片
+  var _fixType = function(type) {
+    type = type.toLowerCase().replace(/jpg/i, 'jpeg');
+    var r = type.match(/png|jpeg|bmp|gif/)[0];
+    return 'image/' + r;
+  }; 
+  var saveFile = function(data, filename){
+      var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+      save_link.href = data;
+      save_link.download = filename;
+
+      var event = document.createEvent('MouseEvents');
+      event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      save_link.dispatchEvent(event);
+  };
+  function saveDomToPng(){
+    /*  http://html2canvas.hertzen.com */
+    html2canvas(document.querySelector("#test")).then(canvas => {
+      console.log(canvas)
+      var imgData  = canvas.toDataURL(type);
+      imgData = imgData.replace(_fixType(type),'image/octet-stream');
+      // 下载后的文件名
+      var filename = 'dom保存图片.' + type;
+      // download
+      saveFile(imgData,filename);
+    });
+  }
+// 手写绘制
+function lineCanvas(obj) {
+  console.log(obj)
+      this.linewidth = 1;
+      this.color = "#000";
+      this.background = "#fff";
+      for (var i in obj) {
+        this[i] = obj[i];
+      };
+      this.paddingX = this.el.getBoundingClientRect().left
+      this.paddingY = this.el.getBoundingClientRect().top
+      this.canvas = document.createElement("canvas");
+      this.el.prepend(this.canvas);
+      this.cxt = this.canvas.getContext("2d");
+      this.canvas.width = this.el.clientWidth;
+      this.canvas.height = this.el.clientHeight;
+      this.cxt.fillStyle = this.background;
+      this.cxt.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      this.cxt.strokeStyle = this.color;
+      this.cxt.lineWidth = this.linewidth;
+      this.cxt.lineCap = "round";
+      this.isBegin =false
+      //开始绘制
+      this.canvas.addEventListener("mousedown", function (e) {
+        this.isBegin =true
+        this.cxt.beginPath();
+        // console.log(e)
+        this.cxt.moveTo(e.pageX-this.paddingX, e.pageY-this.paddingY);
+      }.bind(this), false);
+      //绘制中
+      this.canvas.addEventListener("mousemove", function (e) {
+        if(this.isBegin){
+          this.cxt.lineTo(e.pageX-this.paddingX, e.pageY-this.paddingY);
+          this.cxt.stroke();
+        }
+      }.bind(this), false);
+      //结束绘制
+      this.canvas.addEventListener("mouseup", function () {
+        this.cxt.closePath();
+        this.isBegin =false
+      }.bind(this), false);
+      //清除画布
+      this.clearEl.addEventListener("click", function () {
+        this.cxt.clearRect(0, 0, this.canvas.width, this.canvas.height);
+         this.cxt.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      }.bind(this), false);
+      
+      this.saveEl.addEventListener("click", function () {        
+        var imgData  = this.canvas.toDataURL(type);
+        imgData = imgData.replace(_fixType(type),'image/octet-stream');
+        // 下载后的文件名
+        var filename = '手写图片.' + type;
+        // download
+        saveFile(imgData,filename);
+        // 其它逻辑
+      }.bind(this), false);
+    };
+    new lineCanvas({
+        el: document.getElementById("canvas"), //绘制canvas的父级div
+        clearEl: document.getElementById("clearCanvas"), //清除按钮
+        saveEl: document.getElementById("saveCanvas"), //保存按钮
+        linewidth: 1, //线条粗细，选填
+        color: "black", //线条颜色，选填
+        background: "#ffffff", //线条背景，选填
+        paddingX: 0, // x轴偏移量
+        paddingY: 0, // y轴偏移量
+      });
+</script>
+</html>
