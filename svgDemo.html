@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>svgDemo</title>
+  </head>
+  <body>
+     <div class="svg-box">
+    <div>
+      <svg
+        id="svgLineTutorial"
+        style="border-style:solid;border-width:2px;"
+        height="200px"
+        width="200px"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+
+        <!-- </svg>
+        <svg id="svgCircleTutorial" height="250" xmlns="http://www.w3.org/2000/svg">-->
+        <circle
+          id="myCircle"
+          cx="100"
+          cy="100"
+          r="50"
+          fill="#219E3E"
+          stroke="#17301D"
+          stroke-width="2"
+          @click="click"
+        ></circle>
+        <line x1="10" y1="20" x2="100" y2="200" style="stroke:red;stroke-width:2"></line>
+      </svg>
+    </div>
+    <div>
+      <svg id="svgRectangleTutorial" height="200" xmlns="http://www.w3.org/2000/svg">
+        <rect
+          id="myRectangle"
+          width="300"
+          height="100"
+          stroke="#17301D"
+          stroke-width="2"
+          fill="blue"
+          fill-opacity="0.5"
+          stroke-opacity="0.5"
+        ></rect>
+      </svg>
+    </div>
+    <svg width="500" height="100">
+      <defs>
+        <marker id="markerCircle" markerWidth="8" markerHeight="8" refX="5" refY="5">
+          <circle cx="5" cy="5" r="3" style="stroke: none; fill:#000000;"></circle>
+        </marker>
+        <!-- <marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto">
+          <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;"></path>
+        </marker> -->
+        <marker id="markerArrow" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto">
+          <path d="M2,2 L18,10 L2,18" style="fill:rgba(255,255,255,0);stroke:#17301D;stroke-width:2"></path>
+        </marker>
+      </defs>
+      <line
+        x1="0"
+        y1="0"
+        x2="100"
+        y2="50"
+        stroke="red"
+        stroke-width="1"
+        marker-end="url(#markerArrow)"
+      ></line>
+      <path
+        d="M100,10 L150,10 L150,60"
+        style="stroke: #6666ff; stroke-width: 1px; fill: none;
+                   marker-start: url(#markerCircle);
+                   marker-mid:url(#arrow);
+                   marker-end: url(#markerArrow) "
+      ></path>
+      <path d="M2,2 L18,10 L2,18" style="stroke:#17301D;stroke-width:2px"></path>
+    </svg>
+  </div>
+  </body>
+</html>
