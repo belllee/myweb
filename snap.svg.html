@@ -1,0 +1,176 @@
+<html>
+  <head>
+    <title>snap.svg demo</title>
+    <!-- <script src="https://github.com/adobe-webplatform/Snap.svg/raw/master/dist/snap.svg-min.js" type="text/javascript"></script> -->
+    <script src="snap.svg.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <!-- <svg width="300" height="300" id="app">
+      <path fill="none" stroke="#bada55" strokeWidth: 5
+      d="M10-5-10,15M15,0,0,15M0-5-20,15" /></path>
+      <circle cx="0" cy="5" r="2" fill="red"/>
+      <circle cx="5" cy="0" r="2" fill="red"/>
+      <circle cx="15" cy="0" r="2" fill="red"/>
+      <circle cx="0" cy="15" r="2" fill="red"/>
+    </svg> -->
+    <svg id="demo1" width="300" height="300"></svg>
+    <!-- <hr> -->
+    <svg id="demo2" width="300" height="300"></svg>
+    <!-- <hr> -->
+    <svg id="demo3" width="300" height="300"></svg>
+    <!-- <hr> -->
+    <svg id="demo4" width="300" height="300"></svg>
+    <!-- <hr> -->
+    <svg id="demo5" width="300" height="300"></svg>
+  </body>
+  <script>
+    // var s1 = Snap("#app");
+    // console.log('path' ,s1.select('path').node.outerHTML)
+    // console.log('circle', s1.select('circle').node.outerHTML)
+
+    // 尺寸放大
+    var s1 = Snap("#demo1");
+    var bigCircle = s1.circle(150, 150, 10);
+        bigCircle.attr({
+        fill: "#bada55",
+        stroke: "#000",
+        strokeWidth: 5
+    });
+    bigCircle.animate({ r: 100 }, 1000, mina.easeout(), function() {
+      console.log("animation end");
+    });
+
+    // 圆形填充色渐变，3S内从绿色变成蓝色，动画效果是缓出
+    
+    var s2 = Snap("#demo2");
+    let circle1 = s2.circle(150, 150, 100).attr({
+        fill: "#bada55",
+        stroke: "#000",
+        strokeWidth: 5
+    });
+    circle1.animate({ fill: "#0059b3", }, 3000, mina.easeout(), () => {
+        //动画结束，doSomething
+      });
+    // var p = s.path("M10-5-10,15M15,0,0,15M0-5-20,15").attr({
+    //     fill: "none",
+    //     stroke: "#bada55",
+    //     strokeWidth: 5
+    // });
+    // To create pattern,
+    // just specify dimensions in pattern method:
+    // p = p.pattern(0, 0, 10, 10);
+    // Then use it as a fill on big circle
+    // bigCircle.attr({
+    //     fill: p
+    // });
+    // var maskCircle = s.circle(150, 150, 100);
+    // maskCircle.attr({fill: "r()#fff-#000"});
+    // bigCircle.attr({
+    //     mask: maskCircle
+    // });
+    // 动画样例2
+    // var svg = Snap("#demo2");
+    // var circle = svg.circle(150, 150, 100);
+    // var rect = svg.rect(10,10,200,200);
+    // Snap.animate(
+    //   0,
+    //   100,
+    //   function(val) {
+    //     circle.attr({ r: val });
+    //     rect.attr({ x: val });
+    //   },
+    //   1000,
+    //   mina.easeout(),
+    //   function() {
+    //     console.log("animation end");
+    //   }
+    // );
+    // rect.animate({fill: '#00f'}, 1000, mina.easeout(), function() {
+    //   console.log('animation end');
+    // });
+
+  //path变形 开始态
+  var svg = Snap("#demo3");
+
+  var path = svg.paper.path({d: 'M0.500,65.500 C18.680,33.758 45.141,-6.797 72.500,2.500 C99.859,11.797 72.148,59.027 79.500,98.500 C86.852,137.973 117.668,128.914 138.500,59.500 C159.332,-9.914 246.500,59.500 246.500,59.500 C273.181,117.750 137.350,184.417 225.500,173.500 C351.137,157.940 155.369,160.617 162.500,86.500 C165.180,58.645 237.169,-2.418 283.500,2.500 C357.654,10.371 363.758,80.355 364.500,109.500',stroke:'#f00', fill: 'rgba(0,0,0,0)'});
+  // setTimeout(function() {
+      // 终止态：曲线变直
+      // path.animate({d: 'M1,100 L350,100'}, 1000, mina.easeout(), function() {
+      //     console.log('animation end');
+      // });
+      // 终止态：心形
+      path.animate({d: 'M114.500,58.500 C106.230,58.751 23.907,-37.262 5.500,21.500 C-26.759,124.483 111.761,221.360 119.500,219.500 C154.464,211.096 201.234,149.580 220.500,104.500 C250.260,34.864 220.892,7.159 194.500,1.500 C160.455,-5.800 122.344,58.262 114.500,58.500 Z'}, 1000, mina.easeout(), function() {
+          console.log('animation end');
+      });
+  // }, 1000);
+  //简单曲线描边动画
+  // var path = svg.paper.path({d: 'M0.500,65.500 C18.680,33.758 45.141,-6.797 72.500,2.500 C99.859,11.797 72.148,59.027 79.500,98.500 C86.852,137.973 117.668,128.914 138.500,59.500 C159.332,-9.914 246.500,59.500 246.500,59.500 C273.181,117.750 137.350,184.417 225.500,173.500 C351.137,157.940 155.369,160.617 162.500,86.500 C165.180,58.645 237.169,-2.418 283.500,2.500 C357.654,10.371 363.758,80.355 364.500,109.500', stroke:'#f00', fill: 'rgba(0,0,0,0)'});
+  // // 用Snap的API计算复杂的path长度
+  // var length = Snap.path.getTotalLength(path);
+  // path.attr({
+  //     'stroke-dashoffset': length,
+  //     'stroke-dasharray': length  
+  // });
+  // Snap.animate(length, 0, function(val) {
+  //     path.attr({
+  //         'stroke-dashoffset': val
+  //     });
+  // }, 1000, mina.easeout(), function() {
+  //     console.log('animation end');
+  // });
+  //跟随曲线运动的小飞机
+  // var plane = svg.paper.path({d: 'M0,8,0,12 M0,10,20,10 M 10,0,15,10,10,20', stroke:'#377', fill: 'rgba(0,0,0,0)'});
+  // Snap.animate(0, length, function(val) {
+  //     var point = Snap.path.getPointAtLength(path, val); // 根据path长度变化获取坐标
+  //     var m = new Snap.Matrix();
+  //     m.translate(point.x, point.y);
+  //     m.rotate(point.alpha-180); // 使飞机总是朝着曲线方向。point.alpha：点的切线和水平线形成的夹角
+  //     plane.transform(m);
+  // }, 10000, mina.easeout(), function() {
+  //     console.log('animation end');
+  // });
+
+  // 简单位移动画
+  var s4 = Snap("#demo4");
+  var rect = s4.paper.rect({x: 0, y: 0, width: 50, height: 30, fill: '#f00'});
+  
+  Snap.animate(0, 100, function(val) {
+      var m = new Snap.Matrix();
+      m.translate(val, val*2); // translate位移API
+      rect.transform(m);  // 在rect节点应用matrix
+  }, 1000, mina.easeout());
+
+
+  // 位移、旋转复合动画
+  
+  var s5 = Snap("#demo5");
+  var rect1 = s5.paper.rect({x: 10, y: 10, width: 50, height: 30, fill: '#f00'});
+  // var count = 0
+  var g = s5.paper.group(rect1); // 创建了一个分组节点g作为位移动画节点
+  // var anim_rotate = function() { // 节点旋转部分
+  //     Snap.animate(0, 250, function(val) {
+  //         var m = new Snap.Matrix();  
+  //         m.rotate((val/250)*360,  10+25, 100+15);  // 注意，后面两位数是旋转中心点，属于绝对坐标，svg里节点的变换中心都是绝对坐标，和CSS的transform-origin取值不太一样
+  //         rect.transform(m); 
+  //     }, 500, mina.easeout(), function() {
+  //       count++
+  //         console.log('animation end');
+  //         count <10 && anim_rotate();
+  //     });
+  // };
+  // anim_rotate();
+  var count1 = 0
+  var anim_move = function() { // 节点位移部分
+      Snap.animate(0, 100, function(val) {
+        console.log(val)
+          var m = new Snap.Matrix();
+          // m.translate(val, 0);
+          m.rotate((val/50)*360,  35, 25);
+          g.transform(m); 
+      }, 1000, mina.easeout());
+  };
+  anim_move();
+  </script>
+  <!-- https://aotu.io/notes/2017/01/22/snapsvg/index.html 
+    http://snapsvg.io/docs/-->
+</html>
